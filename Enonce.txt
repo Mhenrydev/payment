@@ -1,0 +1,29 @@
+Test service de paiement
+========================
+
+Contexte
+--------
+L'application à écrire a pour objectif de réaliser un paiement auprès d'un organisme distant.
+
+L'enjeu est d'implémenter correctement la validation distante du paiement ainsi que de disposer d'un environnement de test qui n'effectuera pas réellement le paiement. L'environnement est renseigné dans /etc/conf.json. Sa valeur est 'test' ou 'real'.
+
+A savoir, le projet utilise composer pour l'autoloading, tout est déjà en place donc pas besoin de toucher au fichier /composer.json et au dossier /vendor.
+
+Ennoncé
+-------
+- Développer une classe qui implémentera l'interface \Etoxic\Test\Service\Payment\Payment et qui simulera un paiement qui sera valide dans un cas sur deux (aléatoirement).
+- Développer la véritable classe de paiement qui utilisera le webservice suivant :
+    URL = https://e-toxic.fr/test-payment.php
+    METHODE HTTP = POST
+    DONNES POST = [ credit-card-number => {NUMERO_DE_CARTE_DE_CREDIT} ]
+- Se baser sur la configuration pour effectuer un paiement réel ou de test de manière transparente au niveau du contrôleur : le contrôleur ne doit pas avoir conscience du type de paiement (test ou real) effectué
+- Effectuer la documentation PHPDoc de l'ensemble du projet.
+- Attention en plus de retourner un statut OK ou KO, il faut gérer le fait que le serveur web ne retourne pas toujours une page OK (HTTP code 200).
+
+Exemple d'utilisation
+---------------------
+> php app.php 12345
+Payment success !
+
+> php app.php 54321
+Payment failure !
